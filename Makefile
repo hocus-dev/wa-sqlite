@@ -37,7 +37,8 @@ CFLAGS_COMMON = \
 	-Wno-non-literal-null-conversion \
 	$(CFLAGS_EXTRA)
 CFLAGS_DEBUG = -g $(CFLAGS_COMMON)
-CFLAGS_DIST =  -O3 -flto $(CFLAGS_COMMON)
+# https://webassembly.org/roadmap/ We can safely enable simd and bulk memory ops
+CFLAGS_DIST =  -O3 -flto -msimd128 -mbulk-memory $(CFLAGS_COMMON)
 
 EMFLAGS_COMMON = \
 	-s ALLOW_MEMORY_GROWTH=1 \
@@ -55,6 +56,8 @@ EMFLAGS_DEBUG = \
 EMFLAGS_DIST = \
 	-O3 \
 	-flto \
+	-msimd128 \
+	-mbulk-memory \
 	--closure 1 \
 	$(EMFLAGS_COMMON)
 
